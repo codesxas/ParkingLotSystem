@@ -21,16 +21,26 @@ class ReadInputFile:
             self.assign_input_functions(__input)
 
     def assign_input_functions(self, __input: list):
-        switcher = {
-            "Create_parking_lot": self.create_parking_lot,
-            "Park": self.park,
-            "Leave": self.leave,
-            "Slot_numbers_for_driver_of_age": self.slot_numbers_for_driver_of_age,
-            "Slot_number_for_car_with_number": self.slot_number_for_car_with_number,
-            "Vehicle_registration_number_for_driver_of_age": self.vehicle_registration_number_for_driver_of_age
-        }
+        try:
+            switcher = {
+                "Create_parking_lot":
+                self.create_parking_lot,
+                "Park":
+                self.park,
+                "Leave":
+                self.leave,
+                "Slot_numbers_for_driver_of_age":
+                self.slot_numbers_for_driver_of_age,
+                "Slot_number_for_car_with_number":
+                self.slot_number_for_car_with_number,
+                "Vehicle_registration_number_for_driver_of_age":
+                self.vehicle_registration_number_for_driver_of_age
+            }
 
-        switcher.get(__input[0], 'Invalid Input!!')(__input)
+            switcher.get(__input[0], 'Invalid Input!!')(__input)
+        except:
+            # In case there is any error with input parsing
+            print("Invalid Input!!")
 
     def create_parking_lot(self, __input: list) -> None:
         num_of_slots = int(__input[1])
@@ -38,14 +48,14 @@ class ReadInputFile:
         res = self.parking_system.create_parking_slots(num_of_slots)
         print(res)
 
-    def park(self,  __input: list) -> None:
+    def park(self, __input: list) -> None:
         reg_num = __input[1]
         driver_age = int(__input[3])
 
         res = self.parking_system.assign_vehicle_to_slot(reg_num, driver_age)
         print(res)
 
-    def leave(self,  __input: list) -> None:
+    def leave(self, __input: list) -> None:
         slot_number = int(__input[1])
 
         res = self.parking_system.remove_vehicle_from_slot(slot_number)
@@ -63,11 +73,13 @@ class ReadInputFile:
         res = self.parking_system.get_slot_num_for_car_with_num(reg_num)
         print(res)
 
-    def vehicle_registration_number_for_driver_of_age(self, __input: list) -> None:
+    def vehicle_registration_number_for_driver_of_age(self,
+                                                      __input: list) -> None:
         driver_age = int(__input[1])
 
         res = self.parking_system.get_reg_num_for_driver_of_age(driver_age)
         print(res)
 
 
+# initialization
 rif = ReadInputFile('./input.txt')
